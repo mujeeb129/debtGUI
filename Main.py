@@ -29,6 +29,11 @@ amountEntry.grid(row = 1 , column = 1)
 listBox = Listbox(mainFrame , width = 50)
 listBox.grid(row = 2 , column =  0 , columnspan = 8 , rowspan = 6)
 
+cigarCombobox = ttk.Combobox(mainFrame)
+
+saveButton = Button(mainFrame , text = 'Save')
+saveButton.grid()
+
 
 
 
