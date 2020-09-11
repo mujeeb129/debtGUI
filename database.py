@@ -8,7 +8,8 @@ class SetUp:
 		self.c.execute("""CREATE TABLE IF NOT EXIST debtbox(
 						  id INTEGER PRIMARY KEY ,
 						  name TEXT ,
-						  amount INTEGER)""")
+						  amount INTEGER ,
+						  instance TEXT)""")
 		self.conn.commit()
 
 		def fetch(self):
@@ -17,14 +18,14 @@ class SetUp:
 			self.conn.commit()
 			return rows
 
-		def insert(self , name , amount):
-			self.c.execute("INSERT INTO debtbox VALUES(NULL , ? , ?)",(name , subject))
+		def insert(self , name , amount , instance):
+			self.c.execute("INSERT INTO debtbox VALUES(NULL , ? , ? , ?)",(name , amount , instance))
 			self.conn.commit()
 
-		def update(self ,id , name , amount):
+		def update(self ,id , name , amount , instance):
 			self.c.execute("""UPDATE debtbox
-							  SET name = ? , amount = ?
-							  WHERE id = ?""",(name , amount , id))
+							  SET name = ? , amount = ? , instance = ?
+							  WHERE id = ?""",(name , amount , instance , id))
 			self.conn.commit()
 
 		def delete(self , id):
