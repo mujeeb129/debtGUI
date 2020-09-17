@@ -40,6 +40,15 @@ def populateList():
 	for row in data.fetch():
 		listBox.insert(END , row)
 
+def selectedItem(event):
+	if listBox.curselection() != 0:
+		global selecteditem
+		item = listBox.curselection()[0]
+		selecteditem = listBox.get(item)
+		nameEntry.delete(0,END)
+		name.set(selecteditem[1])
+
+
 def save():
 	global additionList
 	total = sum(additionList)
@@ -55,6 +64,15 @@ def save():
 
 
 def delete():
+	global selecteditem
+	identity = selecteditem[0]
+	data.delete(identity)
+	populateList()
+ 
+def remove():
+	global additionList , additions
+	if additionList != [] or additions != '':
+		
 
 
 window = Tk()
@@ -95,9 +113,6 @@ cigarCombobox['values'] = ('King - 17' ,
 						   'M Wills - 8' ,
 						   'Mini Wills - 5')
 
-scrollbar = Scrollbar(mainFrame)
-listBox.configure(yviewcommand = scrollbar.set)
-scrollbar.configure(command = listBox.yview)
 
 #Add button to the cigar
 addButton = Button(mainFrame , text = 'Add' , command = populate , bg = '#FFFFFF' , bd = 0)
@@ -114,11 +129,17 @@ saveButton.grid(row = 2 , column = 9 , sticky = 'E')
 
 listBox = Listbox(mainFrame , width = 50)
 listBox.grid(row = 3 , column =  0 , columnspan = 8 , rowspan = 6)
+listBox.bind('<<ListboxSelect>>' , selectedItem)
 
-deleteButton = Button(mainFrame , text = 'Delete' , bd = 0 , bg = '#FFFFFF')
+scrollbar = Scrollbar(mainFrame)
+listBox.configure(yscrollcommand = scrollbar.set)
+scrollbar.configure(command = listBox.yview)
+
+deleteButton = Button(mainFrame , text = 'Delete' , bd = 0 , bg = '#FFFFFF' , command = delete)
 deleteButton.grid(row = 3 , column = 9)
 
 updateButton = Button(mainFrame , text = 'Update' , bd = 0 , bg = '#FFFFFF')
+updateButton.grid(row = 4 , column = 9)
 
 
 
