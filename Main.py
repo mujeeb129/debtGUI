@@ -80,11 +80,18 @@ def delete():
 	populateList()
 	
  
-#def remove():
-#	global additionList , additions
-#	if additionList != [] or additions != '':
-
-
+def remove():
+	global additionList , additions
+	if additionList != [] or additions != '':
+		if len(additionList) > 1:
+			additions = additions.replace(' + ' +str(additionList[-1]) , '')
+			additionList.remove(additionList[-1])
+		else :
+			additions = ''
+			additionList.remove(additionList[0])
+	print(additionList)
+	calculate.set(additions)
+	amount.set('')
 
 window = Tk()
 window.title('Debt app')
@@ -132,9 +139,11 @@ addButton.grid(row = 1 , column = 9 , sticky = 'E')
 #Calculation variable 
 calculate = StringVar()
 #Calculation display and save button
-calculationEntry = Entry(mainFrame , textvariable = calculate)
-calculationEntry.grid(row = 2 , column = 0 , columnspan = 8 , )
+calculationEntry = Entry(mainFrame , textvariable = calculate , width = 40)
+calculationEntry.grid(row = 2 , column = 0 , columnspan = 5 , sticky = 'W')
 
+removeButton = Button(mainFrame , text = 'Remove' , command = remove)
+removeButton.grid(column = 2 , row = 2)
 
 saveButton = Button(mainFrame , text = 'Save' , command = save , bg = '#FFFFFF' , bd = 0)
 saveButton.grid(row = 2 , column = 9 , sticky = 'E')
