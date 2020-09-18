@@ -16,7 +16,8 @@ cigarDict = {'King - 17': 17 ,
 			 'Scissors - 8' : 8 , 
 			 'Wills - 11' : 11 ,
 			 'M Wills - 8' : 8 ,
-			 'Mini Wills - 5' : 5 }
+			 'Mini Wills - 5' : 5 ,
+			 'Direct rate' : 1}
 
 def populate():
 	global additions , cigarDict , additionList
@@ -50,29 +51,39 @@ def selectedItem(event):
 
 
 def save():
-	global additionList
+	global additionList , additions 
 	total = sum(additionList)
 	nameS = name.get()
 	amountS = amount.get()
 	instanceS = time.ctime()
 	if nameS != '' or amountS != '' :
 		data.insert(nameS , total , instanceS)
-
+		name.set('')
+		calculate.set('')
+		amount.set('')
+		additions = ''
+		additionList = []
 	else :
 		messagebox.showerror('Please fill' , 'Please fill all the fields')
 	populateList()
 
 
 def delete():
-	global selecteditem
+	global selecteditem , additions , additionList
 	identity = selecteditem[0]
 	data.delete(identity)
+	additions = ''
+	additionList = []
+	name.set('')
+	amount.set('')
+	calculate.set(additions)
 	populateList()
+	
  
-def remove():
-	global additionList , additions
-	if additionList != [] or additions != '':
-		
+#def remove():
+#	global additionList , additions
+#	if additionList != [] or additions != '':
+
 
 
 window = Tk()
@@ -103,7 +114,8 @@ cigarName = StringVar()
 cigarCombobox = ttk.Combobox(mainFrame , state = 'readonly' , textvariable = cigarName)
 cigarCombobox.grid(row = 1 , column = 2)
 
-cigarCombobox['values'] = ('King - 17' ,
+cigarCombobox['values'] = ('Direct rate' ,
+						   'King - 17' ,
 						   'Gold - 10' ,
 						   'Mini Gold - 6' ,
 						   'Essay - 10' ,
